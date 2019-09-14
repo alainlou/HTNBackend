@@ -33,32 +33,16 @@ class IndexerClient:
       'accessToken': self.token,
     }
     location = '/trial'
-    uri = BASE_URL + location + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode(params)
-    r = requests.get(uri).json()
-    return r
-
-  def listVideos(self):
-    params = {
-        'accessToken': self.token
-    }
-    uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos?' + urllib.parse.urlencode(params)
-    r = requests.get(uri).json()
-    return r
-    def getAccessToken(self):
-        uri = BASE_URL + '/auth/trial/Accounts/' + USER_ID + '/AccessToken'
-        headers = {
-            'Ocp-Apim-Subscription-Key': SUB_KEY,
-        }
-        r = requests.get(uri, headers=headers)
-        print(r.json())
-
-  def getDownloadURL(self, videoId):      
-    uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode()   
-    r = requests.get(uri).json()
-    return r
-
-  def testReturn(self, word):
-    return word
-# indexer = IndexerClient()
-# indexer.getAccessToken()
-# indexer.requestByIndex('198c26215e')
+    uri = BASE_URL + location + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode(self.params) #\
+          # + self.getAccessToken()
+    # print(uri)
+    r = requests.get(uri)
+    print(r.json())
+    # def search(phrase):
+    #     uri = BASE_URL + '/Breakdowns/Api/Partner/Breakdowns?'
+        # r = requests.post(url, params=params, files=form_data, headers=headers)
+        # print(r.url)
+        # print(json.dumps(r.json(), indent=2))
+indexer = IndexerClient()
+indexer.getAccessToken()
+indexer.requestByIndex('198c26215e')
