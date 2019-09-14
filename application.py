@@ -4,25 +4,31 @@ from processor import Processor
 
 from indexerclient import IndexerClient
 
-VIDEO_ID = '198c26215e'
+TEST_VIDEO_ID = '198c26215e'
 
 app = Flask(__name__)
 processor = Processor()
 
 #front end requests
-@app.route('/', methods=['GET'])
+# @app.route('/', methods=['GET'])
 #
-def parse_request():
-  body = request.get_json(force=True)
-  title = body['title']
-  category = body['category']
-  speaker = body['speaker']
+# def parse_request():
+#   body = request.get_json(force=True)
+#   title = body['title']
+#   category = body['category']
+#   speaker = body['speaker']
 
-  # print(body['phrase'])
-    # processor.search(body['phrase'])
-    # return 'testPhrase'
-# def hello_world():
-  return title
+#   #use this to test getting the entire json stats object thing for a video (WITH POSTMAN)
+#   return processor.getVideoById(TEST_VIDEO_ID)
 
-if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0')
+# if __name__ == '__main__':
+#   app.run(debug=True, host='0.0.0.0')
+#end of front end requests
+
+#run this to get data and sort into json things
+# print('gay')
+bigJson = processor.getVideoById(TEST_VIDEO_ID)
+print(processor.organizeByKeywords(bigJson))
+
+
+

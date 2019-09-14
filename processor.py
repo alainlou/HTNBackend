@@ -1,16 +1,21 @@
 #concat indexerclient and database client
 from indexerclient import IndexerClient
+import json
 
-VIDEOID = '198c26215e'
+# VIDEOID = '198c26215e'
 
 class Processor:
   def __init__(self):
     self.indexerClient = IndexerClient()
     self.indexerClient.getAccessToken()
-    print(self.indexerClient.requestByIndex(VIDEOID))
   
-  def getVideo(self):
-    self.indexerClient.requestByIndex(VIDEOID)
+  def getVideoById(self, videoId):
+    return self.indexerClient.requestByIndex(videoId)
+
+  def organizeByKeywords(self, jsonThing):
+    #JSON
+    keywords = jsonThing['summarizedInsights']['keywords']
+    print(keywords)
 
 
   

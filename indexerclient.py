@@ -30,16 +30,16 @@ class IndexerClient:
     # params = urllib.parse.urlencode(params)
 
   def requestByIndex(self, videoId):
+    print(videoId)
     location = '/trial'
-    uri = BASE_URL + location + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + 'Index' + urllib.parse.urlencode(self.params) #\
+    uri = BASE_URL + location + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode(self.params) #\
           # + self.getAccessToken()
     print(uri)
-    # r = requests.get(uri)
-    # def search(phrase):
-    #     uri = BASE_URL + '/Breakdowns/Api/Partner/Breakdowns?'
-        # r = requests.post(url, params=params, files=form_data, headers=headers)
-        # print(r.url)
-        # print(json.dumps(r.json(), indent=2))
-indexer = IndexerClient()
-indexer.getAccessToken()
-indexer.requestByIndex('198c26215e')
+    r = requests.get(uri).json()
+    return r
+
+  def testReturn(self, word):
+    return word
+# indexer = IndexerClient()
+# indexer.getAccessToken()
+# indexer.requestByIndex('198c26215e')
