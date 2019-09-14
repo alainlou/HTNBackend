@@ -4,6 +4,8 @@ from processor import Processor
 
 from indexerclient import IndexerClient
 
+VIDEO_ID = '198c26215e'
+
 app = Flask(__name__)
 processor = Processor()
 
@@ -15,16 +17,12 @@ def parse_request():
   title = body['title']
   category = body['category']
   speaker = body['speaker']
-  
+
   # print(body['phrase'])
     # processor.search(body['phrase'])
     # return 'testPhrase'
 # def hello_world():
   return title
-
-
-
-
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0')
