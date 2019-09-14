@@ -17,9 +17,9 @@ class IndexerClient:
         print("Indexer Client started")
 
     def getAccessToken(self):
-        uri = BASE_URL + '/auth/trial/Accounts/' + USER_ID + '/AccessToken'
+        uri = BASE_URL + '/auth/trial/Accounts/' + ACCOUNT_ID + '/AccessToken'
         headers = {
-            'Ocp-Apim-Subscription-Key': SUB_KEY,
+            'Ocp-Apim-Subscription-Key': OCP_KEY,
         }
         r = requests.get(uri, headers=headers)
         print(r.json())
