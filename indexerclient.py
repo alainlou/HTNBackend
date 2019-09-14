@@ -3,9 +3,14 @@ import urllib.parse
 import json
 
 BASE_URL = 'https://api.videoindexer.ai'
-ACCOUNT_ID = ''
-OCP_KEY = ''
-LOCATION = '/trial'
+USER_ID = ''
+SUB_KEY = ''
+
+params = urllib.parse.urlencode({
+    'name': 'video.mp4',
+    'privacy': 'Private',
+    'language': 'English',
+})
 
 class IndexerClient:
   def __init__(self):
@@ -39,6 +44,13 @@ class IndexerClient:
     uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos?' + urllib.parse.urlencode(params)
     r = requests.get(uri).json()
     return r
+    def getAccessToken(self):
+        uri = BASE_URL + '/auth/trial/Accounts/' + USER_ID + '/AccessToken'
+        headers = {
+            'Ocp-Apim-Subscription-Key': SUB_KEY,
+        }
+        r = requests.get(uri, headers=headers)
+        print(r.json())
 
   def getDownloadURL(self, videoId):      
     uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode()   
