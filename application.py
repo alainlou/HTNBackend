@@ -9,26 +9,27 @@ TEST_VIDEO_ID = '198c26215e'
 app = Flask(__name__)
 processor = Processor()
 
-#front end requests
-# @app.route('/', methods=['GET'])
-#
-# def parse_request():
-#   body = request.get_json(force=True)
-#   title = body['title']
-#   category = body['category']
-#   speaker = body['speaker']
+# front end requests
+@app.route('/', methods=['GET'])
 
-#   #use this to test getting the entire json stats object thing for a video (WITH POSTMAN)
-#   return processor.getVideoById(TEST_VIDEO_ID)
+def parse_request():
+  body = request.get_json(force=True)
+  title = body['title']
+  category = body['category']
+  speaker = body['speaker']
 
-# if __name__ == '__main__':
-#   app.run(debug=True, host='0.0.0.0')
-#end of front end requests
+  #use this to test getting the entire json stats object thing for a video (WITH POSTMAN)
+  bigJson = processor.getVideoById(TEST_VIDEO_ID)
+  return processor.organizeByKeywords(bigJson)
 
-#run this to get data and sort into json things
-# print('gay')
-bigJson = processor.getVideoById(TEST_VIDEO_ID)
-print(processor.organizeByKeywords(bigJson))
+if __name__ == '__main__':
+  app.run(debug=True, host='0.0.0.0')
+# end of front end requests
+
+# run this to get data and sort into json things
+
+# bigJson = processor.getVideoById(TEST_VIDEO_ID)
+# print(processor.organizeByKeywords(bigJson))
 
 
 

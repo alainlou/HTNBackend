@@ -14,10 +14,7 @@ class Processor:
 
   def organizeByKeywords(self, jsonThing):
     #JSON
-    keywords = jsonThing['summarizedInsights']['keywords']
-    print(keywords)
-
-
-  
-    # def search(phrase):
-    #     return indexerClient.search(phrase)
+    #return('gets up to here')
+    keywords = jsonThing['summarizedInsights']
+    return keywords
+    
