@@ -15,6 +15,12 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 processor = Processor()
 
+@app.route('/', methods=['GET'])
+@cross_origin()
+def info():
+  name  = request.args.get('name')
+  return processor.process(name)
+
 # front end requests
 @app.route('/video', methods=['GET'])
 @cross_origin()
@@ -31,10 +37,15 @@ def parse_request():
 #   category = body['category']
 #   speaker = body['speaker']
 
-  #use this to test getting the entire json stats object thing for a video (WITH POSTMAN)
-#   bigJson = processor.getVideoById(TEST_VIDEO_ID)
-#   return processor.organizeByKeywords(bigJson)
-  return processor.getVideoURL()
+# run this to get data and sort into json thingsbigJson = processor.getVideoById(TEST_VIDEO_ID)
+  profile = processor.reformatJSON(bigJson)
+  print(profile.keys())
+# print(profile)
+
+@app.route('/test', methods=['GET'])
+@cross_origin()
+def test():
+  return processor.test()
 
 @app.route('/refresh', methods=['GET'])
 @cross_origin()
@@ -46,8 +57,18 @@ profile = processor.reformatJSON(bigJson)
 print(profile.keys())
 # print(profile)
 
+<<<<<<< HEAD
 #if __name__ == '__main__':
 #  app.run(debug=True, host='0.0.0.0', port='8080')
+=======
+@app.route('/video', methods=['GET'])
+@cross_origin()
+def video():
+  return processor.getVideoURL()
+
+if __name__ == '__main__':
+  app.run(debug=True, host='0.0.0.0', port='8080')
+>>>>>>> 4ebccda... some changes
 # end of front end requests
 
 # run this to get data and sort into json things
