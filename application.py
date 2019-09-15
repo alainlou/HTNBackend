@@ -18,8 +18,9 @@ processor = Processor()
 @app.route('/', methods=['GET'])
 @cross_origin()
 def info():
-  name  = request.args.get('name')
-  return processor.process(name)
+  word = request.args.get('searchWord')
+  # name  = request.args.get('searchWord')
+  return processor.getTopFive(word)
 
 #search uses keywords to return a bunch of video urls
 @app.route('/search', methods=['GET'])
@@ -28,6 +29,11 @@ def search():
   parsed_url = urlparse.urlparse(request.url)
   searchWord = urlparse.parse_qs(parsed_url.query)['searchWord'][0]
   return processor.search(searchWord)
+
+@app.route('/topFive', methods=['GET'])
+@cross_origin()
+def getTopFive():
+  return processor.getTopFive()
 
 @app.route('/test', methods=['GET'])
 @cross_origin()
@@ -51,7 +57,8 @@ print(profile.keys())
 @app.route('/video', methods=['GET'])
 @cross_origin()
 def video():
-  return processor.getVideoURL()
+  word = request.args.get('searchWord')
+  return processor.getVideoURL(word)
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port='8080')

@@ -16,6 +16,7 @@ class Processor:
     for i in range(len(vids)):
       ids.append(vids[i]['id'])
     response = {
+      'url': '',
       'data': {
         'climate change': [],
         'mental health': [],
@@ -29,6 +30,7 @@ class Processor:
     #   if(key)
     #   response['data'].append(r)
     # return response
+    response['url'] = self.search(name)
     keys = self.indexerClient.requestByIndex(TEST_VIDEO_ID)['summarizedInsights']['keywords']
     for key in keys:
       if(key['name'] == 'climate change'):
@@ -45,15 +47,17 @@ class Processor:
           response['data']['mental health'].append(obj['startTime'])
     return response
 
-  def getTopFive(self):
-    keys = self.indexerClient.requestByIndex(TEST_VIDEO_ID)['summarizedInsights']['keywords']
+  def getTopFive(self, name):
+    keys = self.indexerClient.requestByIndex(self.search(name)['vidlist'][0])['summarizedInsights']['keywords']
     counts = {}
     for key in keys:
       counts[key['name']] = len(key['appearances'])
     sorted_counts = sorted(counts.items(), key = operator.itemgetter(1))
     response = {
+      'url' : '',
       'data' : {}
     }
+    response['url'] = self.findURL(name)
     n = len(sorted_counts)
     for i in range(n-5, n):
       for key in keys:
@@ -77,12 +81,12 @@ class Processor:
       response['data'].append(r)
     return response
 
-  def getVideoURL(self):
-    vids = self.indexerClient.listVideos()['results']
-    ids = []
-    for vid in vids:
-      ids.append(vid['id'])
-    return self.indexerClient.getDownloadURL(ids[0])
+  # def getVideoURL(self, word):
+  #   vids = self.indexerClient.listVideos()['results']
+  #   ids = []
+  #   for vid in vids:
+      
+  #   return self.indexerClient.getDownloadURL(ids[0])
   
   def getVideoById(self, videoId):
     return self.indexerClient.requestByIndex(videoId)
@@ -108,7 +112,7 @@ class Processor:
     profile['topics'] = topics
     return profile
 
-  def search(self, searchWord) :
+  def search(self, searchWord):
     vids = self.indexerClient.listVideos()['results']
     vidList = []
     for v in vids:
@@ -117,6 +121,9 @@ class Processor:
     returnJson = {}
     returnJson['vidlist'] = vidList
     return returnJson
+
+  def findURL(self, searchWord):
+    return self.indexerClient.getDownloadURL(self.search(searchWord)['vidlist'][0])
 
    
 # processor = Processor()
