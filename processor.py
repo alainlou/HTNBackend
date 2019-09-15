@@ -1,6 +1,7 @@
 #concat indexerclient and database client
 from indexerclient import IndexerClient
 import json
+import operator
 
 TEST_VIDEO_ID = 'f11e461264'
 
@@ -29,7 +30,6 @@ class Processor:
     #   response['data'].append(r)
     # return response
     keys = self.indexerClient.requestByIndex(TEST_VIDEO_ID)['summarizedInsights']['keywords']
-    return str(keys)
     for key in keys:
       if(key['name'] == 'climate change'):
         for obj in key['appearances']:
@@ -43,6 +43,24 @@ class Processor:
       elif(key['name'] == 'mental health'):
         for obj in key['appearances']:
           response['data']['mental health'].append(obj['startTime'])
+    return response
+
+  def getTopFive(self):
+    keys = self.indexerClient.requestByIndex(TEST_VIDEO_ID)['summarizedInsights']['keywords']
+    counts = {}
+    for key in keys:
+      counts[key['name']] = len(key['appearances'])
+    sorted_counts = sorted(counts.items(), key = operator.itemgetter(1))
+    response = {
+      'data' : {}
+    }
+    n = len(sorted_counts)
+    for i in range(n-5, n):
+      for key in keys:
+        if(key['name'] == sorted_counts[i][0]):
+          response['data'][sorted_counts[i][0]] = []
+          for obj in key['appearances']:
+            response['data'][sorted_counts[i][0]].append(obj['startTime'])
     return response
 
   def clean(self):
@@ -73,6 +91,7 @@ class Processor:
     return self.indexerClient.getAccessToken()
 
   def test(self):
+    return self.getTopFive()
     return self.indexerClient.listVideos()
 
     
