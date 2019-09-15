@@ -33,6 +33,9 @@ class Processor:
   def getVideoById(self, videoId):
     return self.indexerClient.requestByIndex(videoId)
 
+  def refresh(self):
+    return self.indexerClient.getAccessToken()
+
   def test(self):
     return self.indexerClient.listVideos()
 
