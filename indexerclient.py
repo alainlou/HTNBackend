@@ -53,6 +53,6 @@ class IndexerClient:
     r = requests.get(uri).json()
     return r
 
-instance = IndexerClient()
-instance.getAccessToken()
-print(instance.listVideos())
+# instance = IndexerClient()
+# instance.getAccessToken()
+# print(instance.listVideos())

@@ -75,17 +75,32 @@ class Processor:
   def test(self):
     return self.indexerClient.listVideos()
 
-  def organizeByKeywords(self, keyword):
+    
+  def reformatJSON(self, jsonFile):
+    # JSON
+    # return('gets up to here')
+    # Names of All Famous People in the Videos
+    namedPeople = jsonFile['summarizedInsights']['namedPeople']
+    # Topics contains "name" and "referenceId"
+    # referenceId is the category "name" belongs in (i.e. Electricity belongs to Technology)
+    topics = jsonFile['summarizedInsights']['topics']
+    profile = {} 
+    profile['namedPeople'] = namedPeople
+    profile['topics'] = topics
+    return profile
+
+  def search(self, searchWord) :
     vids = self.indexerClient.listVideos()['results']
-    ids = []
-    for i in range(len(vids)):
-      ids.append(vids[i]['id'])
-    
-    response = {
-      'data': []
-    }
-    #JSON
-    #return('gets up to here')
-    keywords = result['summarizedInsights']['keywords']
-    return keywords
-    
+    vidList = []
+    for v in vids:
+      if(-1 != v['name'].lower().find(searchWord.lower())):
+        vidList.append(v['id'])
+    returnJson = {}
+    returnJson['vidlist'] = vidList
+    return returnJson
+
+   
+# processor = Processor()
+# bigJson = processor.getVideoById(TEST_VIDEO_ID)
+# profile = processor.reformatJSON(bigJson)
+# print(profile.keys())

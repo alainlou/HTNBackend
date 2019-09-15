@@ -21,26 +21,13 @@ def info():
   name  = request.args.get('name')
   return processor.process(name)
 
-# front end requests
-@app.route('/video', methods=['GET'])
+#search uses keywords to return a bunch of video urls
+@app.route('/search', methods=['GET'])
 @cross_origin()
-def parse_request():
-  # body = request.get_json(force=True)
-  
-  #bc we're using params
+def search():
   parsed_url = urlparse.urlparse(request.url)
   searchWord = urlparse.parse_qs(parsed_url.query)['searchWord'][0]
-  returnJson = processor.organizeByKeywords(searchWord)
-  return(returnJson)
-  # return(urlparse.parse_qs(parsed_url.query)['searchWord'])
-#   title = body['title']
-#   category = body['category']
-#   speaker = body['speaker']
-
-# run this to get data and sort into json thingsbigJson = processor.getVideoById(TEST_VIDEO_ID)
-  profile = processor.reformatJSON(bigJson)
-  print(profile.keys())
-# print(profile)
+  return processor.search(searchWord)
 
 @app.route('/test', methods=['GET'])
 @cross_origin()
