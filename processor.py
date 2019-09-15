@@ -22,6 +22,13 @@ class Processor:
       r = result['summarizedInsights']['keywords']
       response['data'].append(r)
     return response
+
+  def getVideoURL(self):
+    vids = self.indexerClient.listVideos()['results']
+    ids = []
+    for vid in vids:
+      ids.append(vid['id'])
+    return self.indexerClient.getDownloadURL(ids[0])
   
   def getVideoById(self, videoId):
     return self.indexerClient.requestByIndex(videoId)

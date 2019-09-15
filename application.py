@@ -20,7 +20,7 @@ def parse_request():
   #use this to test getting the entire json stats object thing for a video (WITH POSTMAN)
 #   bigJson = processor.getVideoById(TEST_VIDEO_ID)
 #   return processor.organizeByKeywords(bigJson)
-  return processor.clean()
+  return processor.getVideoURL()
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port='8080')
