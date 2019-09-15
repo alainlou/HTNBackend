@@ -39,9 +39,17 @@ class Processor:
   def test(self):
     return self.indexerClient.listVideos()
 
-  def organizeByKeywords(self, jsonThing):
+  def organizeByKeywords(self, keyword):
+    vids = self.indexerClient.listVideos()['results']
+    ids = []
+    for i in range(len(vids)):
+      ids.append(vids[i]['id'])
+    
+    response = {
+      'data': []
+    }
     #JSON
     #return('gets up to here')
-    keywords = jsonThing['summarizedInsights']
+    keywords = result['summarizedInsights']['keywords']
     return keywords
     

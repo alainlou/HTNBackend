@@ -5,6 +5,8 @@ from flask_cors import CORS, cross_origin
 from processor import Processor
 from indexerclient import IndexerClient
 
+import urllib.parse as urlparse
+
 TEST_VIDEO_ID = '198c26215e'
 
 app = Flask(__name__)
@@ -14,9 +16,17 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 processor = Processor()
 
 # front end requests
-#@app.route('/', methods=['GET'])
-#def parse_request():
-#   body = request.get_json(force=True)
+@app.route('/video', methods=['GET'])
+@cross_origin()
+def parse_request():
+  # body = request.get_json(force=True)
+  
+  #bc we're using params
+  parsed_url = urlparse.urlparse(request.url)
+  searchWord = urlparse.parse_qs(parsed_url.query)['searchWord'][0]
+  returnJson = processor.organizeByKeywords(searchWord)
+  return(returnJson)
+  # return(urlparse.parse_qs(parsed_url.query)['searchWord'])
 #   title = body['title']
 #   category = body['category']
 #   speaker = body['speaker']

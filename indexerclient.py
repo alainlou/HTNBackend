@@ -52,4 +52,7 @@ class IndexerClient:
     uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/SourceFile/DownloadUrl?' + urllib.parse.urlencode(params)   
     r = requests.get(uri).json()
     return r
-    
+
+instance = IndexerClient()
+instance.getAccessToken()
+print(instance.listVideos())
