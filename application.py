@@ -37,6 +37,10 @@ def parse_request():
 def refresh():
   processor.refresh()
   return "OK"
+# run this to get data and sort into json thingsbigJson = processor.getVideoById(TEST_VIDEO_ID)
+profile = processor.reformatJSON(bigJson)
+print(profile.keys())
+print(profile)
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port='8080')
