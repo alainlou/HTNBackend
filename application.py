@@ -13,15 +13,9 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 processor = Processor()
 
-@app.route('/', methods=['GET'])
-@cross_origin
-def info():
-  return processor.clean()
-
 # front end requests
-@app.route('/video', methods=['GET'])
-@cross_origin()
-def parse_request():
+#@app.route('/', methods=['GET'])
+#def parse_request():
 #   body = request.get_json(force=True)
 #   title = body['title']
 #   category = body['category']
@@ -40,10 +34,10 @@ def refresh():
 # run this to get data and sort into json thingsbigJson = processor.getVideoById(TEST_VIDEO_ID)
 profile = processor.reformatJSON(bigJson)
 print(profile.keys())
-print(profile)
+# print(profile)
 
-if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port='8080')
+#if __name__ == '__main__':
+#  app.run(debug=True, host='0.0.0.0', port='8080')
 # end of front end requests
 
 # run this to get data and sort into json things
