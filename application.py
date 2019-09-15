@@ -11,21 +11,19 @@ processor = Processor()
 
 # front end requests
 @app.route('/', methods=['GET'])
-
 def parse_request():
-  body = request.get_json(force=True)
-  # title = body['title']
-  # category = body['category']
-  # speaker = body['speaker']
+#   body = request.get_json(force=True)
+#   title = body['title']
+#   category = body['category']
+#   speaker = body['speaker']
 
   #use this to test getting the entire json stats object thing for a video (WITH POSTMAN)
-  bigJson = processor.getVideoById(TEST_VIDEO_ID)
-  return bigJson
-  # return processor.organizeByKeywords(bigJson)
+#   bigJson = processor.getVideoById(TEST_VIDEO_ID)
+#   return processor.organizeByKeywords(bigJson)
+  return processor.clean()
 
 if __name__ == '__main__':
-  # app.run(debug=True, host='0.0.0.0')
-  app.run(host='127.0.0.1', port=8080, debug=True)
+  app.run(debug=True, host='0.0.0.0', port='8080')
 # end of front end requests
 
 # run this to get data and sort into json things

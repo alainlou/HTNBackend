@@ -3,18 +3,13 @@ import urllib.parse
 import json
 
 BASE_URL = 'https://api.videoindexer.ai'
-USER_ID = ''
-SUB_KEY = ''
-
+ACCOUNT_ID = ''
+OCP_KEY = ''
+LOCATION = '/trial'
 
 class IndexerClient:
   def __init__(self):
-    self.params = {
-      'name': 'video.mp4',
-      'privacy': 'Private',
-      'language': 'English',
-      'accessToken': '',
-    }
+    self.token = '**NOT INITIALIZED**'
     print("Indexer Client started")
 
   def getAccessToken(self):
@@ -23,18 +18,30 @@ class IndexerClient:
       'Ocp-Apim-Subscription-Key': OCP_KEY,
     }
     r = requests.get(uri, headers=headers)
-    # return r.json()
-    print('Access Token: ')
-    # print(r.json())
-    self.params['accessToken'] = r.json()
-    # params = urllib.parse.urlencode(params)
+    self.token = r.json()
 
   def requestByIndex(self, videoId):
-    print(videoId)
+    params = {
+      'name': 'video.mp4',
+      'privacy': 'Private',
+      'language': 'English',
+      'accessToken': self.token,
+    }
     location = '/trial'
-    uri = BASE_URL + location + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode(self.params) #\
-          # + self.getAccessToken()
-    print(uri)
+    uri = BASE_URL + location + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode(params)
+    r = requests.get(uri).json()
+    return r
+
+  def listVideos(self):
+    params = {
+        'accessToken': self.token
+    }
+    uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos?' + urllib.parse.urlencode(params)
+    r = requests.get(uri).json()
+    return r
+
+  def getDownloadURL(self, videoId):      
+    uri = BASE_URL + LOCATION + '/Accounts/' + ACCOUNT_ID + '/Videos/' + videoId + '/Index?' + urllib.parse.urlencode()   
     r = requests.get(uri).json()
     return r
 
